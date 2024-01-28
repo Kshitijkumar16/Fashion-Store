@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ModalProvider } from "../providers/modal-provider";
 import { ToasterProvider } from "@/providers/toast-provider";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "Dashboard - Fashion Store",
@@ -20,8 +20,8 @@ export default function RootLayout({
 	return (
 		<ClerkProvider>
 			<html lang='en'>
-				<body className={inter.className} >
-					<ToasterProvider/>
+				<body className={roboto.className}>
+					<ToasterProvider />
 					<ModalProvider />
 					{children}
 				</body>
