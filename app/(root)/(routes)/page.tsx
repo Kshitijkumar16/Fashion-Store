@@ -13,11 +13,7 @@ const SetupPage = () => {
 		}
 	}, [isOpen, onOpen]);
 
-	return (
-		<main>
-			<div className='p-4'>Root Page</div>
-		</main>
-	);
+	return null;
 };
 
 export default SetupPage;
