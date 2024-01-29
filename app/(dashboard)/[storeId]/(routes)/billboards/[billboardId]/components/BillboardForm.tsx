@@ -12,7 +12,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Heading } from "@/components/ui/Heading";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Store } from "@prisma/client";
+import { Billboard } from "@prisma/client";
 import {
 	Form,
 	FormControl,
@@ -27,37 +27,42 @@ import { APIAlert } from "@/components/ui/apiAlert";
 import { useOrigin } from "@/hooks/use-origin";
 
 //
-interface SettingsFormProps {
-	initialData: Store;
+interface BillboardFormProps {
+	initialData: Billboard | null;
 }
 
 // Zod schema
 const formSchema = z.object({
-	name: z.string().min(1, { message: "Required" }),
+	label: z.string().min(1, { message: "Required" }),
+	imageURL: z.string().min(1, { message: "Required" }),
 });
 
 // Creating a Type based on formSchema using the infer utility provided by Zod. This type will match the valid form
-type SettingsFormValue = z.infer<typeof formSchema>;
+type BillboardFormValue = z.infer<typeof formSchema>;
 
 // Component
 
-export const SettingsForm = ({ initialData }: SettingsFormProps) => {
-	// Using useForm and filling default values from intitalData while validating them using the SettingsFormValue type
-	const form = useForm<SettingsFormValue>({
+export const BillboardForm = ({ initialData }: BillboardFormProps) => {
+	// Using useForm and filling default values from intitalData while validating them using the BillboardFormValue type
+	const form = useForm<BillboardFormValue>({
 		resolver: zodResolver(formSchema),
-		defaultValues: initialData,
+		defaultValues: initialData || {label:"", imageURL: ""},
 	});
+
+	const title = initialData ? "Edit billboard" : "Create billboard";
+	const description = initialData ? "Edit your billboard here" : "Add a new billboard";
+	const toastMessage = initialData ? "Billboard updated" : "Billboard creted";
+	const action = initialData ? "Save changes" : "Create";
 
 	const params = useParams();
 	const router = useRouter();
-
 	const origin = useOrigin();
 
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 
 	// Function to update store details in database
-	const onSubmit = async (data: SettingsFormValue) => {
+	const onSubmit = async (data: BillboardFormValue) => {
 		try {
 			setLoading(true);
 			await axios.patch(`/api/stores/${params.storeId}`, data);
@@ -99,8 +104,8 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
 			/>
 			<div className='flex items-center justify-between'>
 				<Heading
-					title='Settings'
-					description='Manage store preferences'
+					title={title}
+					description={description}
 				/>
 				<Button
 					disabled={loading}
@@ -120,15 +125,15 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
 					<div className='grid grid-cols-3 gap-8'>
 						<FormField
 							control={form.control}
-							name='name'
+							name='label'
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Name</FormLabel>
+									<FormLabel>Label</FormLabel>
 									<FormControl>
 										<Input
 											className='capitalize'
 											disabled={loading}
-											placeholder='Store name'
+											placeholder='Billboard label'
 											{...field}
 										/>
 									</FormControl>
@@ -142,16 +147,12 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
 						type='submit'
 						disabled={loading}
 					>
-						Save Changes
+						{action}
 					</Button>
 				</form>
 			</Form>
 			<Separator />
-			<APIAlert
-				title='NEXT_PUBLIC_API_URL'
-				description={`${origin}/api/${params.storeId}`}
-				variant='public'
-			/>
+			
 		</>
 	);
 };
