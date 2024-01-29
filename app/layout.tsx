@@ -1,3 +1,5 @@
+// Main app layout
+
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
@@ -22,6 +24,7 @@ export default function RootLayout({
 			<html lang='en'>
 				<body className={roboto.className}>
 					<ToasterProvider />
+					{/* Renders the Create Store Modal */}
 					<ModalProvider />
 					{children}
 				</body>

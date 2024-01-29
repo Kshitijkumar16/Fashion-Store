@@ -1,5 +1,5 @@
 "use client";
-
+// Global imports
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
@@ -8,7 +8,7 @@ import { Trash } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams, useRouter } from "next/navigation";
-
+// Local imports
 import { Heading } from "@/components/ui/Heading";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -24,17 +24,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { AlertModel } from "@/components/modals/AlertModel";
 
+//
 interface SettingsFormProps {
 	initialData: Store;
 }
 
+// Zod schema
 const formSchema = z.object({
 	name: z.string().min(1, { message: "Required" }),
 });
 
+// Creating a Type based on formSchema using the infer utility provided by Zod. This type will match the valid form
 type SettingsFormValue = z.infer<typeof formSchema>;
 
-export const SettingsForm= ({ initialData } : SettingsFormProps) => {
+// Component
+
+export const SettingsForm = ({ initialData }: SettingsFormProps) => {
+	// Using useForm and filling default values from intitalData while validating them using the SettingsFormValue type
 	const form = useForm<SettingsFormValue>({
 		resolver: zodResolver(formSchema),
 		defaultValues: initialData,
@@ -46,6 +52,7 @@ export const SettingsForm= ({ initialData } : SettingsFormProps) => {
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 
+	// Function to update store details in database
 	const onSubmit = async (data: SettingsFormValue) => {
 		try {
 			setLoading(true);
@@ -60,6 +67,7 @@ export const SettingsForm= ({ initialData } : SettingsFormProps) => {
 		}
 	};
 
+	// Function to delete a store from the database
 	const onDelete = async () => {
 		try {
 			setLoading(true);
@@ -74,6 +82,8 @@ export const SettingsForm= ({ initialData } : SettingsFormProps) => {
 			setOpen(false);
 		}
 	};
+
+	// Component
 
 	return (
 		<>

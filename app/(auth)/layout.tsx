@@ -1,3 +1,5 @@
+// layout for sign-in and sign-up prompts
+
 import React from "react";
 
 export default function AuthLayout({

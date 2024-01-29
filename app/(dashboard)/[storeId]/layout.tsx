@@ -1,8 +1,13 @@
+// Dashboard page's layout 
+
+// Global imports
 import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs";
-
+// Local imports
 import prismadb from "@/lib/prismadb";
 import Navbar from "@/components/Navbar";
+
+// Component
 
 export default async function DashboardLayout({
 	children,
@@ -11,6 +16,8 @@ export default async function DashboardLayout({
 	children: React.ReactNode;
 	params: { storeId: string };
 }) {
+
+	
 	const { userId } = auth();
 
 	if (!userId) {

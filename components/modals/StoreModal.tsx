@@ -1,11 +1,12 @@
 "use client";
-
+// Global imports
 import * as z from "zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useState } from "react";
-
+import toast from "react-hot-toast";
+// Local imports
 import { useStoreModal } from "@/hooks/use-store-modal";
 import { Modal } from "../ui/model";
 import {
@@ -19,13 +20,16 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { formSchema } from "@/lib/validations/storeModalForm";
-import toast from "react-hot-toast";
+
+// Component
 
 export const StoreModal = () => {
+	// Custom hook from zustand
 	const StoreModal = useStoreModal();
-
+	// React hook
 	const [loading, setloading] = useState(false);
 
+	// Form resolver, react-hook-form allowing Zod to validate and create data externally
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -33,12 +37,14 @@ export const StoreModal = () => {
 		},
 	});
 
+	// Function to create the store when pressed "Create"
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		try {
 			setloading(true);
-
+			// Axios sets the new url
 			const response = await axios.post("/api/stores", values);
-
+			// Using window here cause we need a complete refresh (new store is loaded in the database and data is in sync after refresh)
+			// Redirecting user to the Dashboard of the new store
 			window.location.assign(`/${response.data.id}`);
 
 			//
