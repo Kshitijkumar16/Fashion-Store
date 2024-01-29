@@ -4,16 +4,13 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { SettingsForm } from "./(components)/SettingsForm";
 
-interface SettingsPageProps {
-	param: {
-		storeId: string;
-		userId: string;
-	};
-}
-
 // Component
 
-const SettingsPage = async ({ param }: SettingsPageProps) => {
+const SettingsPage = async ({
+	params,
+}: {
+	params: { storeId: string; userId: string };
+}) => {
 	const userId = auth();
 
 	if (!userId) {
@@ -23,8 +20,8 @@ const SettingsPage = async ({ param }: SettingsPageProps) => {
 	// Fetching first store from database for logged user
 	const store = await prismadb.store.findFirst({
 		where: {
-			id: param.storeId,
-			userId: param.userId,
+			id: params.storeId,
+			userId: params.userId,
 		},
 	});
 
