@@ -1,4 +1,4 @@
-// Dashboard page's layout 
+// Dashboard page's layout
 
 // Global imports
 import { redirect } from "next/navigation";
@@ -16,8 +16,6 @@ export default async function DashboardLayout({
 	children: React.ReactNode;
 	params: { storeId: string };
 }) {
-
-	
 	const { userId } = auth();
 
 	if (!userId) {

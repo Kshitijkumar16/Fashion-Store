@@ -1,4 +1,4 @@
-// This page is solely responsible for toggling the isOpen state of Create Store Modal 
+// This page is solely responsible for toggling the isOpen state of Create Store Modal
 
 "use client";
 import { useEffect } from "react";

@@ -6,7 +6,7 @@ interface DashboardPageProps {
 	params: { storeId: string };
 }
 
-// Component 
+// Component
 
 const DashboardPage = async ({ params }: DashboardPageProps) => {
 	const store = await prismadb.store.findFirst({

@@ -50,17 +50,20 @@ export async function DELETE(
 	{ params }: { params: { storeId: string; userId: string } }
 ) {
 	try {
+		// Extracting userId from clerk
 		const userId = auth();
+
+		// Necessary checks
 		if (!userId) {
 			const status = 401;
 			return new NextResponse("Unauthenticated", { status });
 		}
-
 		if (!params.storeId) {
 			const status = 400;
 			return new NextResponse("Store ID is required", { status });
 		}
 
+		// Deleting the record
 		const store = await prismadb.store.deleteMany({
 			where: {
 				id: params.storeId,
@@ -69,10 +72,11 @@ export async function DELETE(
 		});
 
 		return NextResponse.json(store);
+
+		//
 	} catch (error) {
 		console.log("[STORE_DELETE]", error);
 		const status = 500;
 		return new NextResponse("Internal Error", { status });
 	}
 }
-

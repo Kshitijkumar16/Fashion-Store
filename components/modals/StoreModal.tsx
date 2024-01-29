@@ -37,11 +37,11 @@ export const StoreModal = () => {
 		},
 	});
 
-	// Function to create the store when pressed "Create"
+	// Function to go to the new url after store is created
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		try {
 			setloading(true);
-			// Axios sets the new url
+			// Axios sets the new url and calls the POST api
 			const response = await axios.post("/api/stores", values);
 			// Using window here cause we need a complete refresh (new store is loaded in the database and data is in sync after refresh)
 			// Redirecting user to the Dashboard of the new store
