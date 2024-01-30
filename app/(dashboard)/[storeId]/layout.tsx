@@ -14,7 +14,9 @@ export default async function DashboardLayout({
 	params,
 }: {
 	children: React.ReactNode;
-	params: { storeId: string };
+	params: {
+		userID: string; storeId: string 
+};
 }) {
 	const { userId } = auth();
 
