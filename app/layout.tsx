@@ -1,13 +1,17 @@
 // Main app layout
 
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ModalProvider } from "../providers/modal-provider";
 import { ToasterProvider } from "@/providers/toast-provider";
 
-const roboto = Roboto({ weight: "400", subsets: ["latin"] });
+const roboto = Inter({
+	weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+	subsets: ["latin"],
+	style: ["normal"],
+});
 
 export const metadata: Metadata = {
 	title: "Dashboard - Fashion Store",
