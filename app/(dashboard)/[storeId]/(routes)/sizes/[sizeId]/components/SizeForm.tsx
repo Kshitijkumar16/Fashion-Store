@@ -23,12 +23,11 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Heading } from "@/components/ui/Heading";
 import { AlertModel } from "@/components/modals/AlertModel";
-import ImageUpload from "@/components/ui/imageUpload";
 
 // Zod schema
 const formSchema = z.object({
 	name: z.string().min(1, { message: "Required" }),
-	value: z.string().min(1, { message: "Required" }),
+	value: z.number().min(1, { message: "Required" }),
 });
 
 // Creating a type based on formSchema using the infer utility provided by zod. This type will match the valid form
@@ -59,7 +58,7 @@ export const SizeForm = ({ initialData } : SizeFormProps) => {
 		resolver: zodResolver(formSchema),
 		defaultValues: initialData || {
 			name: "",
-			value: "",
+			value: 0,
 		},
 	});
 
