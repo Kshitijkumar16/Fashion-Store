@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 
 import { stripe } from "@/lib/stripe";
 import prismadb from "@/lib/prismadb";
-import { request } from "http";
 
 const corsHeaders = {
 	"Access-Control-Allow-Origin": "*",
@@ -65,7 +64,7 @@ export async function POST(
 		billing_address_collection: "required",
 		phone_number_collection: { enabled: true },
 		success_url: `${process.env.FRONTEND_STORE_URL}/cart?success=1`,
-		cancel_url: `${process.env.FRONTEND_STORE_URL}/cart?canceled=1`,
+		cancel_url: `${process.env.FRONTEND_STORE_URL}/cart?cancelled=1`,
 		metadata: { orderId: order.id },
 	});
 
