@@ -6,6 +6,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ModalProvider } from "../providers/modal-provider";
 import { ToasterProvider } from "@/providers/toast-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 
 const roboto = Inter({
 	weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -27,10 +28,16 @@ export default function RootLayout({
 		<ClerkProvider>
 			<html lang='en'>
 				<body className={roboto.className}>
-					<ToasterProvider />
-					{/* Renders the Create Store Modal */}
-					<ModalProvider />
-					{children}
+					<ThemeProvider
+						attribute='class'
+						defaultTheme='system'
+						enableSystem
+					>
+						<ToasterProvider />
+						{/* Renders the Create Store Modal */}
+						<ModalProvider />
+						{children}
+					</ThemeProvider>
 				</body>
 			</html>
 		</ClerkProvider>
